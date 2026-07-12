@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.foxfactory.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan  6 23:16:17 2027 GMT
+  hsts: null
+- host: developer.foxfactory.com
+  https: false
+- host: api.foxfactory.com
+  https: false
+domains:
+- domain: foxfactory.com
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false

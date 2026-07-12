@@ -28,6 +28,8 @@ apis:
     description: >-
       The Fox Factory Holding API provides access to platform services and data for enterprise integration and automation.
 common:
+  - type: DomainSecurity
+    url: security/fox-factory-holding-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/foxfactory
   - type: Website
