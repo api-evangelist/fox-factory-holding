@@ -23,7 +23,7 @@ description: >-
   Fox Factory Holding is a major US corporation and Fortune 1000 company. The Fox Factory Holding API provides programmatic access to its platform services, data, and integrations for enterprise customers and partners.
 created: '2026-04-19'
 modified: '2026-04-19'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - aid: fox-factory-holding:fox-factory-holding-api
     name: Fox Factory Holding API
