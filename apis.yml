@@ -18,6 +18,10 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fox-factor
 tags:
   - Suspension
   - Cycling
+  - Power-Sports
+tags_raw:
+  - Suspension
+  - Cycling
   - Powersports
 description: >-
   Fox Factory Holding is a major US corporation and Fortune 1000 company. The Fox Factory Holding API provides programmatic access to its platform services, data, and integrations for enterprise customers and partners.
@@ -28,6 +32,10 @@ apis:
   - aid: fox-factory-holding:fox-factory-holding-api
     name: Fox Factory Holding API
     tags:
+      - Suspension
+      - Cycling
+      - Power-Sports
+    tags_raw:
       - Suspension
       - Cycling
       - Powersports
