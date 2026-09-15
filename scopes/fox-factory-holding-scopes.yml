@@ -1,0 +1,39 @@
+generated: '2026-09-14'
+method: probed
+source: https://ridefox.com/.well-known/openid-configuration (HTTP 200, 2026-09-14)
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+description: >-
+  OAuth 2.0 / OpenID Connect scopes advertised by the customer-account authorization server behind the
+  FOX storefront at ridefox.com. These are buyer-account scopes, not developer/partner API scopes —
+  Fox Factory publishes no partner API scope reference. Scope descriptions below are our reading of the
+  scope names; the discovery document publishes names only.
+issuer: https://shopify.com/authentication/68121624800
+authorization_endpoint: https://shopify.com/authentication/68121624800/oauth/authorize
+token_endpoint: https://shopify.com/authentication/68121624800/oauth/token
+docs: null
+docs_note: No first-party scope reference page is published on any Fox Factory host.
+scope_count: 4
+scopes:
+  - name: openid
+    description: Standard OpenID Connect scope; requests an ID token for the signed-in customer.
+    standard: true
+  - name: email
+    description: Releases the customer's email address and email_verified claim.
+    standard: true
+  - name: customer-account-api:full
+    description: Full access to the signed-in customer's account (orders, addresses, profile) via the Shopify Customer Account API.
+    standard: false
+  - name: customer-account-mcp-api:full
+    description: Full access to the signed-in customer's account through the Customer Account MCP API — the buyer-scoped counterpart to the anonymous UCP commerce MCP endpoint.
+    standard: false
+observed_in_the_wild:
+  - flow: storefront login
+    url: https://ridefox.com/customer_authentication/login
+    requested_scope: openid email customer-account-api
+    note: Observed on the 302 to the Shopify authorize endpoint (2026-09-14).
+claims_supported: [iss, sub, aud, exp, iat, nonce, sid, email, email_verified]
+code_challenge_methods_supported: [S256]
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

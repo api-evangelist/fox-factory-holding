@@ -1,0 +1,54 @@
+generated: '2026-09-14'
+method: searched
+source: >-
+  registry.npmjs.org search (ridefox, fox-factory), pypi.org/pypi/ridefox/json, github.com/ridefox,
+  github.com/foxfactory, github.com/fox-factory, and https://ridefox.com/llms.txt — all 2026-09-14
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+description: >-
+  Fox Factory Holding publishes no client libraries. Its one callable surface is a hosted MCP endpoint
+  reached over plain JSON-RPC, which needs no SDK. This artifact records a checked absence, not an
+  unchecked gap.
+package_count: 0
+official_package_count: 0
+packages: []
+registries_checked:
+  - registry: npm
+    query: ridefox
+    result: no packages
+    url: 'https://registry.npmjs.org/-/v1/search?text=ridefox'
+    status: 200
+  - registry: npm
+    query: fox-factory
+    result: no first-party packages (only unrelated matches such as micromark-factory-*)
+    status: 200
+  - registry: pypi
+    query: ridefox
+    result: not found
+    url: https://pypi.org/pypi/ridefox/json
+    status: 404
+source_repositories:
+  - url: https://github.com/ridefox
+    status: 200
+    org_name: FOX
+    website: http://www.ridefox.com
+    public_repos: 0
+    note: The company's GitHub organization exists and is theirs, but has no public repositories.
+  - url: https://github.com/foxfactory
+    status: 200
+    note: Separate GitHub account/organization; no first-party client libraries identified.
+  - url: https://github.com/fox-factory
+    status: 200
+    note: Separate GitHub account/organization; no first-party client libraries identified.
+third_party_referenced:
+  - name: Shop skill
+    url: https://shop.app/SKILL.md
+    official: false
+    vendor: Shopify
+    note: >-
+      Referenced by the store's own llms.txt as the recommended path for personal shopping agents. It is
+      Shopify's artifact for all Shopify stores, not a Fox Factory package, and is recorded here only so
+      the reference is not mistaken for a first-party SDK.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

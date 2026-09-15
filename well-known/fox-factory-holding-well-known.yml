@@ -1,0 +1,144 @@
+generated: '2026-09-14'
+method: probed
+source: live GET probes of /.well-known/* on every host in the record (2026-09-14)
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+description: >-
+  Well-known discovery documents served by Fox Factory Holding's direct-to-consumer storefront hosts.
+  ridefox.com (the FOX brand storefront, and the redirect target of foxfactory.com) serves a live
+  OpenID Connect discovery document, an RFC 8414 OAuth 2.0 authorization-server metadata document, an
+  RFC 9728 OAuth 2.0 protected-resource metadata document, and a Universal Commerce Protocol (UCP)
+  merchant profile at /.well-known/ucp. The identity documents are issued by Shopify on behalf of the
+  merchant (issuer https://shopify.com/authentication/68121624800, the FOX shop id) because the
+  storefront runs on Shopify; they are nonetheless served from Fox Factory's own hosts and describe
+  Fox Factory's own customer accounts. No security.txt and no A2A agent card are served on any host.
+notes: >-
+  A 404 on this Shopify storefront returns an HTML shell (4,264 bytes), so every 404 below was confirmed
+  by body content as well as status. The corporate domain foxfactory.com 301s to ridefox.com at the root
+  but answers /.well-known/* itself with a bare text/plain "Not Found".
+hosts:
+  - host: ridefox.com
+    note: FOX brand storefront; foxfactory.com (the declared corporate website) redirects here.
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: application/json
+        file: fox-factory-holding-openid-configuration.json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: application/json
+        file: fox-factory-holding-oauth-authorization-server.json
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        content_type: application/json
+        file: fox-factory-holding-oauth-protected-resource.json
+      - path: /.well-known/ucp
+        status: 200
+        content_type: application/json
+        file: fox-factory-holding-ucp.json
+        note: Universal Commerce Protocol merchant profile; names the MCP endpoint and payment handlers.
+      - path: /.well-known/apple-app-site-association
+        status: 200
+        content_type: application/json
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/mcp.json
+        status: 404
+  - host: www.ridefox.com
+    note: 301s to ridefox.com; serves the same documents.
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: application/json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: application/json
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: foxfactory.com
+    note: Corporate domain; root 301s to ridefox.com but /.well-known/* is answered here as text/plain "Not Found".
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: www.raceface.com
+    note: Race Face storefront (Fox Factory asset purchase, 2014).
+    documents:
+      - path: /.well-known/ucp
+        status: 200
+        content_type: application/json
+        file: fox-factory-holding-raceface-ucp.json
+  - host: eastoncycling.com
+    note: Easton Cycling storefront (Fox Factory asset purchase, 2014).
+    documents:
+      - path: /.well-known/ucp
+        status: 200
+        content_type: application/json
+        file: fox-factory-holding-eastoncycling-ucp.json
+  - host: www.methodracewheels.com
+    note: Method Race Wheels storefront (Custom Wheel House, acquired 2023).
+    documents:
+      - path: /.well-known/ucp
+        status: 200
+        content_type: application/json
+        file: fox-factory-holding-methodracewheels-ucp.json
+  - host: tensortire.com
+    note: Tensor Tire storefront (Custom Wheel House, acquired 2023).
+    documents:
+      - path: /.well-known/ucp
+        status: 200
+        content_type: application/json
+  - host: gmzraceproducts.com
+    note: GMZ Race Products storefront (Custom Wheel House, acquired 2023).
+    documents:
+      - path: /.well-known/ucp
+        status: 200
+        content_type: application/json
+  - host: marzocchi.com
+    note: Marzocchi brand site; no UCP profile served.
+    documents:
+      - path: /.well-known/ucp
+        status: 404
+  - host: maruccisports.com
+    note: Marucci Sports (acquired November 2023); /.well-known/ucp answers 200 with an HTML shell, not a document.
+    documents:
+      - path: /.well-known/ucp
+        status: 200
+        content_type: text/html
+        note: HTML shell, not a UCP profile — recorded as a miss.
+  - host: developer.foxfactory.com
+    note: Host does not resolve (NXDOMAIN) — a scaffolded hostname carried by an earlier round, not a real Fox Factory host.
+    documents: []
+  - host: api.foxfactory.com
+    note: Host does not resolve (NXDOMAIN) — a scaffolded hostname carried by an earlier round, not a real Fox Factory host.
+    documents: []
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

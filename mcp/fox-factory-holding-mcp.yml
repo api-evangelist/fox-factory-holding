@@ -1,0 +1,156 @@
+generated: '2026-09-14'
+method: probed
+source: https://ridefox.com/api/ucp/mcp (JSON-RPC tools/list, HTTP 200, 2026-09-14)
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+name: FOX Commerce MCP (UCP)
+description: >-
+  Fox Factory Holding's FOX storefront at ridefox.com serves a live, anonymous Model Context Protocol
+  endpoint at https://ridefox.com/api/ucp/mcp implementing the Universal Commerce Protocol (UCP)
+  shopping service. An unauthenticated JSON-RPC tools/list returns 13 tools with full JSON Schema
+  2020-12 inputSchemas covering catalog search, product lookup, cart lifecycle, checkout lifecycle and
+  order retrieval. The server is advertised by the store's own /llms.txt, /agents.md, /robots.txt and
+  /.well-known/ucp merchant profile.
+platform_authored: true
+platform_note: >-
+  The server implementation is Shopify's UCP runtime (serverInfo.name "universal-commerce", version
+  0.1.0), not software Fox Factory wrote; the catalog, prices, inventory, discounts and orders it
+  exposes are Fox Factory's. Recorded as a provider agent surface because it is reachable on Fox
+  Factory's own host and transacts Fox Factory's own commerce, with the platform authorship stated.
+deployment:
+  mode: remote
+  endpoint: https://ridefox.com/api/ucp/mcp
+  auth: none
+  verified: probed
+  note: >-
+    Anonymous tools/list returned HTTP 200 with the full tool set on 2026-09-14. Tool CALLS additionally
+    require meta["ucp-agent"].profile (a UCP agent profile URI); calling without it returns JSON-RPC
+    error -32001 invalid_profile_url with HTTP 422. Buyer-account-scoped operations use the Shopify
+    customer-account OAuth server named in /.well-known/oauth-protected-resource.
+protocol:
+  jsonrpc: '2.0'
+  mcp_protocol_version: '2024-11-05'
+  server_info:
+    name: universal-commerce
+    version: 0.1.0
+  capabilities:
+    tools: {listChanged: true}
+    prompts: {listChanged: true}
+    resources: {listChanged: true}
+    logging: {}
+  ucp_version: '2026-08-25'
+  ucp_supported_versions: ['2026-08-25', '2026-04-08', '2026-01-23']
+  response_header_version: 'x-shopify-ucp-mcp-api-version: 2026-08-25'
+status: live
+tools_source: mcp/fox-factory-holding-mcp-tools.json
+tool_count: 13
+tools:
+  - name: search_catalog
+    category: catalog
+    write: false
+    description: Search for products from the online store, hosted on Shopify.
+    required: [meta, catalog]
+  - name: lookup_catalog
+    category: catalog
+    write: false
+    description: Look up multiple products or variants by identifier (1-10 ids).
+    required: [meta, catalog]
+  - name: get_product
+    category: catalog
+    write: false
+    description: Retrieve complete product detail by identifier. Returns a singular product.
+    required: [meta, catalog]
+  - name: get_cart
+    category: cart
+    write: false
+    description: Get the cart contents.
+    required: [meta, id]
+  - name: create_cart
+    category: cart
+    write: true
+    description: Creates a new cart.
+    required: [meta, cart]
+  - name: update_cart
+    category: cart
+    write: true
+    description: Perform updates to a cart.
+    required: [meta, cart, id]
+  - name: cancel_cart
+    category: cart
+    write: true
+    reverses: create_cart
+    description: Cancels a cart.
+    required: [meta, id]
+  - name: get_checkout
+    category: checkout
+    write: false
+    description: Returns details about the checkout, including line items, totals, discounts and taxes.
+    required: [meta, id]
+  - name: create_checkout
+    category: checkout
+    write: true
+    description: Creates a checkout. Returns checkout details including line items and totals.
+    required: [meta, checkout]
+  - name: update_checkout
+    category: checkout
+    write: true
+    description: Updates a checkout (buyer, fulfillment method, discounts, payment instruments).
+    required: [meta, checkout, id]
+  - name: complete_checkout
+    category: checkout
+    write: true
+    idempotent: true
+    idempotency_key: meta["idempotency-key"]
+    description: Completes a checkout and returns the checkout result. Buyer approval is required before payment.
+    required: [meta, id, checkout]
+  - name: cancel_checkout
+    category: checkout
+    write: true
+    reverses: create_checkout
+    description: Cancels a checkout.
+    required: [meta, id]
+  - name: get_order
+    category: order
+    write: false
+    description: Get the details of an order.
+    required: [meta, id]
+sibling_endpoints:
+  - brand: Race Face
+    host: www.raceface.com
+    endpoint: https://www.raceface.com/api/ucp/mcp
+    tool_count: 13
+    status: 200
+    verified: probed
+  - brand: Easton Cycling
+    host: eastoncycling.com
+    endpoint: https://eastoncycling.com/api/ucp/mcp
+    tool_count: 13
+    status: 200
+    verified: probed
+  - brand: Method Race Wheels
+    host: www.methodracewheels.com
+    endpoint: https://www.methodracewheels.com/api/ucp/mcp
+    tool_count: 13
+    status: 200
+    verified: probed
+excluded_endpoints:
+  - brand: Shock Therapy
+    host: shocktherapyst.com
+    endpoint: https://shocktherapy.com/api/ucp/mcp
+    status: 200
+    reason: >-
+      Divested. Fox Factory sold its Phoenix, Arizona AAG operations — Shock Therapy, Upfit UTV and
+      Geiser — to S&G Holdings and Investments Company and the businesses' former general manager on
+      2026-02-26 (FOXF Form 10-Q, FY2026 Q1). The storefront serves a UCP/MCP endpoint but it is no
+      longer a Fox Factory surface.
+agent_guidance:
+  published_at: https://ridefox.com/llms.txt
+  mirrored_at: https://ridefox.com/agents.md
+  rules:
+    - Checkout requires contemporaneous human approval; agents must not complete payment autonomously.
+    - The MCP endpoint is rate-limited per IP; back off on 429.
+    - Pass context.address_country and context.currency for accurate pricing and availability.
+    - Prices are integers in ISO 4217 minor units paired with a currency code.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

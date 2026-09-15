@@ -1,0 +1,138 @@
+generated: '2026-09-14'
+method: derived
+source: >-
+  mcp/fox-factory-holding-mcp-tools.json (live tools/list, 2026-09-14), https://ridefox.com/llms.txt,
+  https://ridefox.com/robots.txt, https://ridefox.com/.well-known/ucp, and response headers observed on
+  https://ridefox.com/api/ucp/mcp
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+description: >-
+  Cross-cutting runtime semantics of the one callable Fox Factory Holding surface: the UCP/MCP commerce
+  endpoint at https://ridefox.com/api/ucp/mcp. Every field below is read from the live tool schemas, the
+  store's published agent instructions, or observed response headers — nothing is inferred from a
+  generic Shopify description.
+transport:
+  protocol: JSON-RPC 2.0 over HTTPS POST (Model Context Protocol)
+  endpoint: https://ridefox.com/api/ucp/mcp
+  content_type: application/json
+  accept: application/json, text/event-stream
+  mcp_protocol_version: '2024-11-05'
+auth_style:
+  summary: >-
+    Anonymous for discovery and catalog reads. Every tools/call additionally requires a UCP agent
+    profile URI in meta["ucp-agent"].profile. Buyer identity, where needed, comes from the Shopify
+    customer-account OIDC issuer; payment authorization comes from a UCP payment handler with explicit
+    buyer approval.
+  see: authentication/fox-factory-holding-authentication.yml
+idempotency:
+  supported: true
+  coverage: partial
+  mechanism: 'meta["idempotency-key"] on the tools/call arguments'
+  scope:
+    - complete_checkout
+  mutating_operations:
+    - create_cart
+    - update_cart
+    - cancel_cart
+    - create_checkout
+    - update_checkout
+    - complete_checkout
+    - cancel_checkout
+  note: >-
+    Exactly one of the seven mutating tools declares an idempotency key. complete_checkout's inputSchema
+    carries meta["idempotency-key"] ("An idempotency key for completing the checkout") — the one
+    operation that moves money. Cart and checkout creation and update expose no replay protection, so an
+    agent that retries create_cart or create_checkout after a timeout can duplicate the resource. No
+    retention window for the key is published.
+  retention: null
+  header: null
+  evidence: mcp/fox-factory-holding-mcp-tools.json (complete_checkout.inputSchema.properties.meta.properties["idempotency-key"])
+reversibility:
+  grade: documented
+  na: false
+  note: >-
+    Both create-side write surfaces ship an explicit reversal tool, but no published document states a
+    window inside which the reversal works, so this grades `documented`, not `verified`. Post-purchase
+    reversal (returns/refunds) is a human policy surface, not an agent-callable operation.
+  surfaces:
+    - write: create_cart
+      reversal: cancel_cart
+      operationId: cancel_cart
+      window: null
+      window_source: null
+      note: Cancels a cart by id. No stated time limit.
+    - write: create_checkout
+      reversal: cancel_checkout
+      operationId: cancel_checkout
+      window: null
+      window_source: null
+      note: Cancels a checkout by id. No stated time limit. Available before completion only.
+    - write: complete_checkout
+      reversal: null
+      operationId: null
+      window: null
+      window_source: https://ridefox.com/policies/refund-policy
+      note: >-
+        Once a checkout is completed there is no reversal tool on the MCP surface. Refunds and returns
+        run through the published refund policy as a human process; the policy page is the only stated
+        remedy and it is not machine-callable.
+dry_run_mode:
+  supported: false
+  note: No test mode, sandbox store, simulation flag or preview tool is exposed on the UCP endpoint.
+pagination:
+  style: cursor-less limit
+  note: >-
+    search_catalog and lookup_catalog take a filters/limit-shaped catalog object; lookup_catalog caps
+    ids at 10 (minItems 1, maxItems 10). No page token or cursor parameter appears in any tool schema.
+  params: ['catalog.ids (max 10)', 'catalog.filters', 'catalog.query']
+expansion:
+  supported: true
+  note: get_product takes catalog.selected[] (variant options) and catalog.preferences[] to shape the returned product detail.
+localization_context:
+  required_for_accuracy: true
+  params: [context.address_country, context.address_region, context.postal_code, context.language, context.currency, context.intent]
+  note: >-
+    The store's own llms.txt instructs agents to pass context.address_country and context.currency for
+    accurate pricing and availability. Prices are returned as integers in ISO 4217 minor units paired
+    with a currency code (600 USD = $6.00) and must be converted before being quoted to a buyer.
+attribution:
+  note: >-
+    Cart and checkout tools accept an attribution object (referring_domain, click_id_tag/value,
+    activity_id_tag/value, utm_campaign/source/medium/content/term) — the agent is expected to carry
+    marketing provenance into the order.
+request_id_tracing:
+  supported: true
+  header: x-request-id
+  note: Observed on live responses, e.g. 986e7678-bac9-4b86-acdb-42f1352fb8f7-1789431121.
+versioning:
+  style: dated protocol versions negotiated out of band
+  current: '2026-08-25'
+  supported: ['2026-08-25', '2026-04-08', '2026-01-23']
+  response_header: 'x-shopify-ucp-mcp-api-version'
+  discovery: https://ridefox.com/.well-known/ucp
+  see: lifecycle/fox-factory-holding-lifecycle.yml
+error_envelope:
+  shape: JSON-RPC 2.0 error object with a UCP-specific data block
+  example_code: -32001
+  fields: [error.code, error.message, error.data.code, error.data.content, error.data.continue_url]
+  http_status_on_error: 422
+  see: errors/fox-factory-holding-problem-types.yml
+rate_limit_signaling:
+  documented: true
+  headers_observed: []
+  status_on_exhaustion: 429
+  note: >-
+    llms.txt states "The MCP endpoint is rate-limited per IP. Back off on 429 responses." No numeric
+    limit is published and no RateLimit-* or Retry-After header appeared on the successful responses we
+    observed. See rate-limits/fox-factory-holding-rate-limits.yml.
+human_approval_invariant:
+  required: true
+  note: >-
+    Both robots.txt and llms.txt state that checkout, payment and order placement must not be completed
+    automatically: an agent must obtain explicit, contemporaneous human approval, or route the purchase
+    through Shop Pay via the Shop skill. This is a hard behavioural constraint on the write surface, not
+    a recommendation.
+  source: https://ridefox.com/robots.txt
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

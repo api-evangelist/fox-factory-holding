@@ -1,0 +1,64 @@
+generated: '2026-09-14'
+method: probed
+source: https://ridefox.com/.well-known/ucp and response headers from https://ridefox.com/api/ucp/mcp (2026-09-14)
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+description: >-
+  Versioning and lifecycle posture of the FOX UCP/MCP commerce surface. Fox Factory publishes no API
+  changelog, no deprecation policy, no SLA and no status page of its own; what it does publish is a
+  machine-readable version-support matrix in its UCP merchant profile.
+versioning:
+  scheme: dated protocol version (YYYY-MM-DD), negotiated via the UCP merchant profile
+  current: '2026-08-25'
+  supported:
+    - version: '2026-08-25'
+      role: latest stable
+      endpoint: https://ridefox.com/api/ucp/mcp
+      spec: https://ucp.dev/2026-08-25/specification/overview/
+    - version: '2026-04-08'
+      role: supported
+      profile: https://ridefox-us.myshopify.com/.well-known/ucp/2026-04-08
+      spec: https://ucp.dev/2026-04-08/specification/overview/
+    - version: '2026-01-23'
+      role: supported
+      profile: https://ridefox-us.myshopify.com/.well-known/ucp/2026-01-23
+  version_list_also_published_at: https://ridefox.com/llms.txt
+  response_header: 'x-shopify-ucp-mcp-api-version: 2026-08-25'
+  discovery: https://ridefox.com/.well-known/ucp
+  note: >-
+    Three protocol versions are served concurrently, each with its own discovery profile URL. That is a
+    real, machine-readable version-support statement — the strongest lifecycle signal this provider
+    publishes.
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation or sunset policy is published on any Fox Factory host, and no RFC 8594 Sunset or
+    Deprecation header was observed. Older UCP versions are listed as supported with no stated
+    end-of-life date.
+status_page:
+  published: false
+  url: null
+  note: >-
+    Fox Factory publishes no status page for the storefront or the commerce endpoint. The underlying
+    platform's status page belongs to Shopify, not to Fox Factory, so it is not recorded as a provider
+    surface.
+sla:
+  published: false
+changelog:
+  published: false
+  note: >-
+    No API or platform changelog on any Fox Factory host. The corporate news surface is investor
+    relations (investor.ridefox.com) and the store's blog at https://ridefox.com/blogs/news, neither of
+    which tracks the commerce interface.
+divestitures_affecting_the_surface:
+  - brand: Shock Therapy / Upfit UTV / Geiser
+    date: '2026-02-26'
+    note: >-
+      Sold to S&G Holdings and Investments Company and the businesses' former general manager. Their
+      storefronts still serve UCP/MCP endpoints but are no longer Fox Factory surfaces (FOXF Form 10-Q,
+      FY2026 Q1).
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

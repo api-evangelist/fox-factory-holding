@@ -1,0 +1,114 @@
+generated: '2026-09-14'
+method: probed
+source: >-
+  https://ridefox.com/.well-known/ucp, /.well-known/openid-configuration, /.well-known/oauth-authorization-server,
+  /.well-known/oauth-protected-resource and live JSON-RPC probes of https://ridefox.com/api/ucp/mcp (2026-09-14)
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+description: >-
+  Standards the FOX commerce surface declares about itself. Every entry below is evidenced by a document
+  Fox Factory serves from its own host or by an observed live response — none is a marketing claim.
+conformance:
+  - id: ucp
+    name: Universal Commerce Protocol 2026-08-25
+    conforms: true
+    evidence: https://ridefox.com/.well-known/ucp
+    detail: >-
+      The merchant profile declares ucp.version 2026-08-25 plus two prior supported versions, the
+      dev.ucp.shopping service over MCP transport, and the capability set dev.ucp.shopping.checkout,
+      .cart, .order, .catalog.search, .catalog.lookup, .fulfillment, .discount, plus the Shopify
+      extension dev.shopify.catalog.
+    domain_standard: true
+    market: retail / e-commerce
+  - id: mcp
+    name: Model Context Protocol 2024-11-05
+    conforms: true
+    evidence: https://ridefox.com/api/ucp/mcp
+    detail: >-
+      initialize returned protocolVersion 2024-11-05 with serverInfo universal-commerce 0.1.0 and
+      capabilities for tools, prompts, resources and logging; tools/list returned 13 tools.
+  - id: jsonrpc-2.0
+    name: JSON-RPC 2.0
+    conforms: true
+    evidence: https://ridefox.com/api/ucp/mcp
+    detail: Requests and both success and error responses carry jsonrpc "2.0", id, and result/error members.
+  - id: json-schema-2020-12
+    name: JSON Schema Draft 2020-12
+    conforms: true
+    evidence: mcp/fox-factory-holding-mcp-tools.json
+    detail: Every one of the 13 tool inputSchemas declares $schema https://json-schema.org/draft/2020-12/schema.
+  - id: oidc-discovery
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    evidence: https://ridefox.com/.well-known/openid-configuration
+    detail: Serves issuer, authorization/token endpoints, jwks_uri, response_types, subject_types, id_token signing algs and claims_supported.
+  - id: oauth2
+    name: OAuth 2.0 (authorization code + refresh token)
+    conforms: true
+    evidence: https://ridefox.com/.well-known/oauth-authorization-server
+    detail: grant_types_supported authorization_code, refresh_token and urn:ietf:params:oauth:grant-type:jwt-bearer.
+  - id: rfc8414
+    name: RFC 8414 OAuth 2.0 Authorization Server Metadata
+    conforms: true
+    evidence: https://ridefox.com/.well-known/oauth-authorization-server
+  - id: rfc9728
+    name: RFC 9728 OAuth 2.0 Protected Resource Metadata
+    conforms: true
+    evidence: https://ridefox.com/.well-known/oauth-protected-resource
+    detail: Declares resource https://ridefox.com, authorization_servers and bearer_methods_supported [header].
+  - id: rfc7636
+    name: RFC 7636 PKCE
+    conforms: true
+    evidence: https://ridefox.com/.well-known/openid-configuration
+    detail: code_challenge_methods_supported [S256].
+  - id: iso4217
+    name: ISO 4217 currency codes (minor units)
+    conforms: true
+    evidence: mcp/fox-factory-holding-mcp-tools.json
+    detail: Tool descriptions specify integer amounts in ISO 4217 minor units paired with a currency code.
+  - id: iso3166-1-alpha-2
+    name: ISO 3166-1 alpha-2 country codes
+    conforms: true
+    evidence: mcp/fox-factory-holding-mcp-tools.json
+    detail: catalog.context.address_country is specified as ISO 3166-1 alpha-2.
+  - id: bcp47
+    name: IETF BCP 47 language tags
+    conforms: true
+    evidence: mcp/fox-factory-holding-mcp-tools.json
+    detail: catalog.context.language is specified as a BCP 47 tag.
+  - id: llmstxt
+    name: llms.txt / agents.md agent instructions
+    conforms: true
+    evidence: https://ridefox.com/llms.txt
+    detail: A real agent-instruction document is served, mirrored at /agents.md and indexed by /sitemap_agentic_discovery.xml.
+  - id: rfc9457
+    name: RFC 9457 Problem Details
+    conforms: false
+    evidence: https://ridefox.com/api/ucp/mcp
+    detail: Errors use the JSON-RPC error object, not application/problem+json.
+  - id: openapi
+    name: OpenAPI
+    conforms: false
+    evidence: https://ridefox.com/openapi.json
+    detail: >-
+      No OpenAPI is published on any Fox Factory host. /openapi.json returns 404 on ridefox.com and
+      foxfactory.com; the machine-readable contract here is the MCP tool schema set, not a REST spec.
+  - id: rfc9116
+    name: RFC 9116 security.txt
+    conforms: false
+    evidence: https://ridefox.com/.well-known/security.txt
+    detail: 404 on every Fox Factory host probed.
+  - id: a2a
+    name: A2A Agent Card
+    conforms: false
+    evidence: https://ridefox.com/.well-known/agent-card.json
+    detail: 404 (HTML shell) at both /.well-known/agent-card.json and the legacy /.well-known/agent.json on every host probed.
+certifications:
+  published: false
+  note: >-
+    Fox Factory publishes no trust center and no SOC 2 / ISO 27001 / PCI / HIPAA / FedRAMP attestation
+    of its own. Card handling is delegated to the declared payment handlers, whose compliance belongs to
+    those operators.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

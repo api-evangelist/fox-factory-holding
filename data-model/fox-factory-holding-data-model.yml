@@ -1,0 +1,112 @@
+generated: '2026-09-14'
+method: derived
+source: mcp/fox-factory-holding-mcp-tools.json (live tools/list from https://ridefox.com/api/ucp/mcp, 2026-09-14)
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+description: >-
+  Entity graph of the FOX commerce surface, derived from the input schemas of the 13 live UCP/MCP tools.
+  Only entities and fields that appear in those schemas are recorded; response shapes were not exercised
+  against the live store, so response-only fields are deliberately absent.
+id_scheme:
+  format: Shopify Global ID (gid)
+  examples:
+    - 'gid://shopify/Cart/abc123'
+    - 'gid://shopify/Checkout/abc123'
+    - 'gid://shopify/Order/123'
+  note: Product and variant identifiers are passed as opaque strings (catalog.id, catalog.ids[]).
+entities:
+  - name: Product
+    tools: [search_catalog, lookup_catalog, get_product]
+    fields: [id, "selected[].name", "selected[].label", "preferences[]"]
+    note: Variant selection is expressed as selected[] option name/label pairs on get_product.
+  - name: Cart
+    tools: [get_cart, create_cart, update_cart, cancel_cart]
+    fields: [id, "line_items[]", buyer, context, attribution, fulfillment, discounts]
+  - name: Checkout
+    tools: [get_checkout, create_checkout, update_checkout, complete_checkout, cancel_checkout]
+    fields: [id, "line_items[]", buyer, payment, context, attribution, fulfillment, discounts, cart_id]
+  - name: Order
+    tools: [get_order]
+    fields: [id]
+  - name: LineItem
+    fields: [id, quantity, item]
+  - name: Buyer
+    fields: [email, phone_number]
+  - name: PaymentInstrument
+    fields: [id, handler_id, type, credential, billing_address]
+    note: >-
+      handler_id selects a UCP payment handler (apple-pay, shopify.card, shop_pay, gpay); apple-pay
+      requires billing_address and an apple_pay_token credential, everything else requires
+      credential.token + credential.type.
+  - name: BuyerContext
+    fields: [address_country, address_region, postal_code, language, currency, intent, "eligibility[]"]
+  - name: Attribution
+    fields: [referring_domain, click_id_tag, click_id_value, activity_id_tag, activity_id_value, utm_campaign, utm_source, utm_medium, utm_content, utm_term]
+  - name: Fulfillment
+    fields: ["methods[]"]
+  - name: Discount
+    fields: ["codes[]"]
+    note: Codes are case-insensitive and each update replaces the previously applied set.
+  - name: AgentProfile
+    fields: ['meta["ucp-agent"].profile']
+    note: Identity of the calling agent; required on every tools/call.
+relationships:
+  - from: Cart
+    to: LineItem
+    type: has_many
+    via: line_items
+  - from: Checkout
+    to: LineItem
+    type: has_many
+    via: line_items
+  - from: Checkout
+    to: Cart
+    type: belongs_to
+    via: cart_id
+    note: create_checkout accepts cart_id to convert an existing cart into a checkout.
+  - from: Cart
+    to: Buyer
+    type: has_one
+    via: buyer
+  - from: Checkout
+    to: Buyer
+    type: has_one
+    via: buyer
+  - from: Checkout
+    to: PaymentInstrument
+    type: has_many
+    via: payment.instruments
+  - from: LineItem
+    to: Product
+    type: belongs_to
+    via: item
+  - from: Cart
+    to: Discount
+    type: has_one
+    via: discounts.codes
+  - from: Checkout
+    to: Discount
+    type: has_one
+    via: discounts.codes
+  - from: Cart
+    to: Fulfillment
+    type: has_one
+    via: fulfillment
+  - from: Checkout
+    to: Fulfillment
+    type: has_one
+    via: fulfillment
+  - from: Order
+    to: Checkout
+    type: belongs_to
+    via: complete_checkout
+    note: >-
+      Inferred from the tool flow (complete_checkout produces the purchase that get_order reads), not
+      from an explicit id field in any input schema.
+    confidence: medium
+money:
+  representation: integer minor units paired with an ISO 4217 currency code
+  example: '{"amount": 2500, "currency": "USD"} is $25.00'
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -2,11 +2,12 @@ aid: fox-factory-holding
 url: https://raw.githubusercontent.com/api-evangelist/fox-factory-holding/refs/heads/main/apis.yml
 name: Fox Factory Holding
 type: Index
+position: Producing
 deliveryModel:
   model: unknown
   open_source: false
   commercial: false
-  callable_host: false
+  callable_host: true
   label: Delivery model not determined — needs a product licence on record
   confidence: low
   source:
@@ -14,58 +15,138 @@ deliveryModel:
   generated: '2026-08-28'
   method: derived
 accessModel:
-  pricing: unknown
-  onboarding: unknown
+  pricing: free
+  onboarding: none
   trial: false
-  try_now: false
-  public: false
-  label: Unknown
-  confidence: low
+  try_now: true
+  public: true
+  label: Free and anonymous — the UCP/MCP commerce endpoint at ridefox.com needs no account or key
+  confidence: high
   source:
-  - plans
-  - {url: 'https://www.foxfactory.com', status: 301, note: 'declared website redirects to https://ridefox.com/ — a different registrable domain (foxfactory.com -> ridefox.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
-  generated: '2026-07-22'
-  method: derived
+  - {url: 'https://ridefox.com/api/ucp/mcp', status: 200, note: 'anonymous JSON-RPC tools/list returned 13 tools (probed 2026-09-14)'}
+  - {url: 'https://www.foxfactory.com', status: 301, note: 'declared website redirects to https://ridefox.com/ — the FOX brand storefront, which is where the API surface lives (probed 2026-09-14)'}
+  generated: '2026-09-14'
+  method: probed
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fox-factory-holding.png
 tags:
   - Suspension
   - Cycling
   - Power-Sports
+  - Manufacturing
+  - E-Commerce
+  - MCP
+  - Agent-Commerce
 tags_raw:
   - Suspension
   - Cycling
   - Powersports
+  - Manufacturing
+  - E-Commerce
+  - MCP
+  - Agent Commerce
 description: >-
-  Fox Factory Holding is a major US corporation and Fortune 1000 company. The Fox Factory Holding API provides programmatic access to its platform services, data, and integrations for enterprise customers and partners.
+  Fox Factory Holding Corp. (NASDAQ: FOXF) designs and manufactures performance ride dynamics products —
+  FOX suspension for mountain bikes, trucks and powersports vehicles, plus Race Face and Easton Cycling
+  components, Method Race Wheels, Tensor Tire and Marucci Sports. It runs no developer program and
+  publishes no OpenAPI, but its direct-to-consumer storefronts do expose a real, callable agent surface:
+  ridefox.com serves a live Model Context Protocol endpoint implementing the Universal Commerce Protocol
+  (UCP 2026-08-25) at https://ridefox.com/api/ucp/mcp, answering an anonymous tools/list with 13 tools
+  for catalog search, product lookup, cart lifecycle, checkout lifecycle and order retrieval. The store
+  also publishes llms.txt and agents.md agent instructions, a UCP merchant profile, and OpenID
+  Connect / OAuth 2.0 discovery documents for customer accounts. The same surface is served by the Race
+  Face, Easton Cycling and Method Race Wheels storefronts.
 created: '2026-04-19'
-modified: '2026-04-19'
+modified: '2026-09-14'
 specificationVersion: '0.23'
 apis:
   - aid: fox-factory-holding:fox-factory-holding-api
-    name: Fox Factory Holding API
+    name: FOX Commerce API (UCP over MCP)
     tags:
       - Suspension
       - Cycling
       - Power-Sports
+      - E-Commerce
+      - MCP
     tags_raw:
       - Suspension
       - Cycling
       - Powersports
+      - E-Commerce
+      - MCP
     image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    baseURL: https://api.foxfactory.com
-    humanURL: https://developer.foxfactory.com
+    baseURL: https://ridefox.com/api/ucp/mcp
+    humanURL: https://ridefox.com/agents.md
     properties:
-      - url: https://developer.foxfactory.com/docs
+      - url: mcp/fox-factory-holding-mcp.yml
+        type: MCPServer
+      - url: https://ridefox.com/agents.md
         type: Documentation
+      - url: mcp/fox-factory-holding-mcp-tools.json
+        type: MCPTools
     description: >-
-      The Fox Factory Holding API provides access to platform services and data for enterprise integration and automation.
+      The FOX storefront's Universal Commerce Protocol service, transported over the Model Context
+      Protocol at https://ridefox.com/api/ucp/mcp. Anonymous JSON-RPC; every tool call carries a UCP
+      agent profile URI. Thirteen tools: search_catalog, lookup_catalog, get_product, get_cart,
+      create_cart, update_cart, cancel_cart, get_checkout, create_checkout, update_checkout,
+      complete_checkout, cancel_checkout and get_order. Checkout completion requires explicit,
+      contemporaneous buyer approval and is the only operation that accepts an idempotency key. The
+      server runtime is Shopify's UCP implementation; the catalog, pricing, inventory and orders are Fox
+      Factory's.
 common:
+  - type: MCPServer
+    url: mcp/fox-factory-holding-mcp.yml
+  - type: WellKnown
+    url: well-known/fox-factory-holding-well-known.yml
+  - type: LLMsTxt
+    url: llms/fox-factory-holding-llms.txt
+  - type: Authentication
+    url: authentication/fox-factory-holding-authentication.yml
+  - type: OAuthScopes
+    url: scopes/fox-factory-holding-scopes.yml
+  - type: Conventions
+    url: conventions/fox-factory-holding-conventions.yml
+  - type: Idempotency
+    url: conventions/fox-factory-holding-conventions.yml
+  - type: ErrorCatalog
+    url: errors/fox-factory-holding-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/fox-factory-holding-lifecycle.yml
+  - type: Conformance
+    url: conformance/fox-factory-holding-conformance.yml
+  - type: DataModel
+    url: data-model/fox-factory-holding-data-model.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Packages
+    url: packages/fox-factory-holding-packages.yml
+  - type: RateLimits
+    url: rate-limits/fox-factory-holding-rate-limits.yml
+  - type: Plans
+    url: plans/fox-factory-holding-plans-pricing.yml
   - type: DomainSecurity
     url: security/fox-factory-holding-domain-security.yml
+  - type: Documentation
+    url: https://ridefox.com/agents.md
+  - type: GitHubOrganization
+    url: https://github.com/ridefox
+  - type: Blog
+    url: https://ridefox.com/blogs/news
+  - type: Support
+    url: https://ridefox.com/pages/contact
+  - type: TermsOfService
+    url: https://ridefox.com/policies/terms-of-service
+  - type: PrivacyPolicy
+    url: https://ridefox.com/policies/privacy-policy
   - type: LinkedIn
     url: https://www.linkedin.com/company/foxfactory
   - type: Website
-    url: https://www.foxfactory.com
+    url: https://ridefox.com
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+
+x-enrichment:
+  date: '2026-09-14'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v3

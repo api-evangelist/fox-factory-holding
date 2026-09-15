@@ -1,0 +1,25 @@
+generated: '2026-09-14'
+method: generated
+source: >-
+  Packaged Agent Skills generated from the live UCP/MCP tool set at https://ridefox.com/api/ucp/mcp,
+  captured verbatim in ../mcp/fox-factory-holding-mcp-tools.json on 2026-09-14. Every tool name and
+  parameter cited is present in that document. Fox Factory publishes no skills of its own; its
+  /llms.txt points agents at Shopify's shop.app/SKILL.md, which is not a first-party artifact.
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+skills:
+  - file: fox-factory-holding-find-a-product.md
+    name: Find a FOX product
+    api: mcp/fox-factory-holding-mcp.yml
+    operations: [search_catalog, lookup_catalog, get_product]
+  - file: fox-factory-holding-build-a-cart.md
+    name: Build and revise a FOX cart
+    api: mcp/fox-factory-holding-mcp.yml
+    operations: [create_cart, get_cart, update_cart, cancel_cart]
+  - file: fox-factory-holding-checkout-with-buyer-approval.md
+    name: Check out on FOX with buyer approval
+    api: mcp/fox-factory-holding-mcp.yml
+    operations: [create_checkout, get_checkout, update_checkout, complete_checkout, cancel_checkout, get_order]
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,73 @@
+generated: '2026-09-14'
+method: probed
+source: live JSON-RPC probes of https://ridefox.com/api/ucp/mcp (2026-09-14)
+provider: Fox Factory Holding
+providerId: fox-factory-holding
+format: jsonrpc-2.0
+rfc9457: false
+description: >-
+  Error semantics of the FOX UCP/MCP commerce endpoint. There is no OpenAPI to derive 4xx/5xx responses
+  from and no published error reference on any Fox Factory host, so this catalog records only error
+  shapes actually returned to our probes plus the one failure mode the provider documents in prose.
+envelope:
+  transport_status: 422
+  body:
+    jsonrpc: '2.0'
+    id: <request id>
+    error:
+      code: <JSON-RPC integer code>
+      message: <human-readable summary>
+      data:
+        code: <UCP machine-readable error slug>
+        content: <human-readable detail>
+        continue_url: <URL a human can open to finish the task>
+  note: >-
+    The endpoint returns HTTP 422 with a JSON-RPC error object rather than a 4xx-per-condition REST
+    status. data.code is the machine-readable discriminator an agent should branch on; data.continue_url
+    is a human-handoff link.
+problem_types:
+  - code: -32001
+    data_code: invalid_profile_url
+    title: UCP discovery failed
+    http_status: 422
+    detail: 'Unable to fetch agent profile: Missing profile uri'
+    cause: >-
+      The tools/call omitted meta["ucp-agent"].profile, or supplied a profile URI the server could not
+      fetch and validate.
+    remediation: >-
+      Publish a UCP agent profile at a fetchable https URI and pass it as meta["ucp-agent"].profile on
+      every tools/call.
+    method: probed
+    evidence: {url: 'https://ridefox.com/api/ucp/mcp', request: 'tools/call search_catalog with empty arguments', status: 422}
+  - code: -32001
+    data_code: invalid_profile_url
+    title: UCP discovery failed (precedes method dispatch)
+    http_status: 422
+    detail: 'Unable to fetch agent profile: Missing profile uri'
+    cause: >-
+      Observed identically for an unknown JSON-RPC method (nope/nope). The UCP agent-profile check runs
+      before method resolution, so a malformed or unknown method does NOT return -32601 Method not
+      found — it returns this same discovery error.
+    remediation: >-
+      Do not treat this error as proof the method exists. Confirm tool names from tools/list, which is
+      answered anonymously.
+    method: probed
+    evidence: {url: 'https://ridefox.com/api/ucp/mcp', request: 'method nope/nope', status: 422}
+  - code: null
+    data_code: null
+    title: Rate limited
+    http_status: 429
+    detail: The MCP endpoint is rate-limited per IP.
+    cause: Too many requests from one source IP.
+    remediation: Back off and retry with exponential delay. No numeric limit or Retry-After value is published.
+    method: searched
+    evidence: {url: 'https://ridefox.com/llms.txt', status: 200}
+not_observed:
+  - note: >-
+      No authenticated error paths (401/403 from the Shopify customer-account issuer), no payment
+      decline codes and no inventory/out-of-stock error codes were observed, because exercising them
+      would require completing a real checkout against a live store. They are therefore absent from this
+      catalog rather than assumed.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

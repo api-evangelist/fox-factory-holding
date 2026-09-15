@@ -4,40 +4,45 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Fox Factory Holding
 providerId: fox-factory-holding
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+modified: '2026-09-14'
+generated: '2026-09-14'
+method: searched
+source: https://ridefox.com/llms.txt, https://ridefox.com/.well-known/ucp and live probes of https://ridefox.com/api/ucp/mcp (2026-09-14)
+reconciled: true
 tags:
   - Manufacturing
   - Powersports
-  - Performance Components
-description: Fox Factory Holding Corp (FOX) does not publish a public developer API or pricing for
-  programmatic access. Sales are e-commerce/dealer-network based for performance suspension and
-  components.
-notes: No public developer portal or API found at foxfactory.com / ridefox.com. Scaffold retained as
-  a placeholder.
+  - Cycling
+  - Commerce
+description: >-
+  Fox Factory Holding publishes no API plans, no developer tiers and no metered API pricing. Access to
+  its UCP/MCP commerce endpoint is free and anonymous — no account, no key, no quota purchase. What is
+  priced is merchandise: the endpoint returns per-SKU product pricing in ISO 4217 minor units, and money
+  changes hands only through a buyer-approved checkout. plan_count is therefore 0 as a matter of fact,
+  not as a gap.
+notes: >-
+  Replaces a 2026-05-04 bulk-sweep scaffold that recorded "No public API". The no-API-plan conclusion
+  stands, but the reason is now evidenced: the API exists, is callable anonymously, and is simply not
+  sold.
 sources:
-  - https://www.ridefox.com/
-plans:
-  - id: fox-factory-holding-no-public-api
-    name: No Public API
-    type: enterprise
-    description: No public developer API or commercial API plan published.
-    entries:
-      - label: No public offering
-        name: none
-        type: subscription
-        metric: contract
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: not applicable
-        userMultiplied: false
-    elements:
-      - name: Dealer / partner channels only
+  - https://ridefox.com/llms.txt
+  - https://ridefox.com/.well-known/ucp
+  - https://ridefox.com/api/ucp/mcp
+plan_count: 0
+plans: []
+access:
+  model: free-anonymous
+  signup_required: false
+  api_key_required: false
+  note: >-
+    tools/list answered HTTP 200 with no credential. Tool calls require a UCP agent profile URI, which
+    is an identity declaration rather than a purchased credential.
+commerce_pricing:
+  priced_object: merchandise SKUs
+  currency_representation: integer ISO 4217 minor units paired with a currency code
+  payment_handlers: [com.google.pay, dev.shopify.card, dev.shopify.shop_pay]
+  buyer_approval_required: true
+  refund_policy: https://ridefox.com/policies/refund-policy
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
