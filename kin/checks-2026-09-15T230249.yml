@@ -2,24 +2,20 @@
 kin_checks:
   slug: fox-factory-holding
   schema_version: 0.22.0
-  scored_at: '2026-09-14'
-  run_ts: 2026-09-14T064754
+  scored_at: '2026-09-15'
+  run_ts: 2026-09-15T230249
   note: Actionable checks only (missed + partial). earned/na are every other check
     in rubric/scoring-0.22.0.yml; counts below let you verify that.
   counts:
     total: 136
-    earned: 10
-    partial: 3
-    missed: 83
+    earned: 28
+    partial: 8
+    missed: 60
     na: 40
   checks:
-  - id: tags_present
-    status: missed
   - id: multiple_apis
     status: missed
   - id: well_known_published
-    status: missed
-  - id: llms_txt_published
     status: missed
   - id: apis_json_self_hosted
     status: missed
@@ -53,8 +49,6 @@ kin_checks:
     status: missed
   - id: vocabulary_published
     status: missed
-  - id: conformance_declared
-    status: missed
   - id: overlay_published
     status: missed
   - id: change_log_present
@@ -69,8 +63,6 @@ kin_checks:
     status: missed
   - id: webhooks_advertised
     status: missed
-  - id: github_org_present
-    status: missed
   - id: roadmap_present
     status: missed
   - id: examples_published
@@ -80,8 +72,6 @@ kin_checks:
   - id: api_reference_present
     status: missed
   - id: getting_started_present
-    status: missed
-  - id: authentication_documented
     status: missed
   - id: sdk_count_1
     status: missed
@@ -93,11 +83,7 @@ kin_checks:
     status: missed
   - id: postman_present
     status: missed
-  - id: agent_skill_present
-    status: missed
-  - id: support_channel
-    status: missed
-  - id: blog_present
+  - id: plans_present
     status: missed
   - id: plans_multiple
     status: missed
@@ -105,31 +91,15 @@ kin_checks:
     status: missed
   - id: sign_up_present
     status: missed
-  - id: terms_of_service
-    status: missed
-  - id: privacy_policy
-    status: missed
   - id: compliance_published
     status: missed
   - id: trust_center
     status: missed
-  - id: reg_oauth_scopes
-    status: missed
-  - id: reg_authentication_documented
-    status: missed
   - id: reg_vulnerability_disclosure
-    status: missed
-  - id: reg_terms_of_service
-    status: missed
-  - id: reg_privacy_policy
     status: missed
   - id: reg_compliance_published
     status: missed
-  - id: reg_standards_conformance
-    status: missed
   - id: reg_named_standard_conformance
-    status: missed
-  - id: reg_consent_model
     status: missed
   - id: reg_certification_signal
     status: missed
@@ -149,19 +119,9 @@ kin_checks:
     status: missed
   - id: reversibility_documented
     status: missed
-  - id: mcp_server
-    status: missed
-  - id: auth_clarity
-    status: missed
-  - id: idempotency
-    status: missed
-  - id: error_semantics
-    status: missed
   - id: openapi_examples
     status: missed
   - id: event_surface_described
-    status: missed
-  - id: agent_skills
     status: missed
   - id: well_known_catalog
     status: missed
@@ -171,21 +131,36 @@ kin_checks:
     status: missed
   - id: dry_run_mode
     status: missed
-  - id: delegated_identity
-    status: missed
-  - id: protected_resource_metadata
-    status: missed
   - id: dynamic_client_registration
     status: missed
-  - id: agentic_commerce
-    status: missed
-  - id: rate_limits_documented
+  - id: agent_skill_present
     status: partial
-    earned: 2.0
-  - id: plans_present
+    earned: 0.75
+  - id: mcp_server
     status: partial
-    earned: 2.0
+    earned: 4.8
+    detail: 'grade: documented'
+  - id: auth_clarity
+    status: partial
+    earned: 9.0
+    detail: 'grade: served'
+  - id: idempotency
+    status: partial
+    earned: 4.5
+    detail: 'grade: documented'
+  - id: error_semantics
+    status: partial
+    earned: 4.0
+    detail: 'grade: documented'
   - id: rate_limit_signal
     status: partial
     earned: 3.5
     detail: 'grade: documented'
+  - id: agent_skills
+    status: partial
+    earned: 1.25
+    detail: 'authorship: derived'
+  - id: agentic_commerce
+    status: partial
+    earned: 1.25
+    detail: 'grade: platform'
