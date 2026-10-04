@@ -92,6 +92,9 @@ apis:
       contemporaneous buyer approval and is the only operation that accepts an idempotency key. The
       server runtime is Shopify's UCP implementation; the catalog, pricing, inventory and orders are Fox
       Factory's.
+    x-surface: platform-generated
+    x-platform: shopify
+    x-platform-surface: ucp
 common:
   - type: MCPServer
     url: mcp/fox-factory-holding-mcp.yml
