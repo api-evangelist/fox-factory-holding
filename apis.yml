@@ -96,6 +96,8 @@ apis:
     x-platform: shopify
     x-platform-surface: ucp
 common:
+  - type: FinOps
+    url: finops/fox-factory-holding-finops.yml
   - type: MCPServer
     url: mcp/fox-factory-holding-mcp.yml
   - type: WellKnown
