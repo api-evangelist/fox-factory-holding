@@ -1,4 +1,4 @@
-# Fox Factory Holding (fox-factory-holding)
+# Fox Factory Holding
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,23 +64,122 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Fox Factory Holding is a major US corporation and Fortune 1000 company. The Fox Factory Holding API provides programmatic access to its platform services, data, and integrations for enterprise customers and partners.
+Fox Factory Holding Corp. (NASDAQ: FOXF) designs and manufactures performance ride dynamics products — FOX suspension for mountain bikes, trucks and powersports vehicles, plus Race Face and Easton Cycling components, Method Race Wheels, Tensor Tire and Marucci Sports. It runs no developer program and publishes no OpenAPI, but its direct-to-consumer storefronts do expose a real, callable agent surface: ridefox.com serves a live Model Context Protocol endpoint implementing the Universal Commerce Protocol (UCP 2026-08-25) at https://ridefox.com/api/ucp/mcp, answering an anonymous tools/list with 13 tools for catalog search, product lookup, cart lifecycle, checkout lifecycle and order retrieval. The store also publishes llms.txt and agents.md agent instructions, a UCP merchant profile, and OpenID Connect / OAuth 2.0 discovery documents for customer accounts. The same surface is served by the Race Face, Easton Cycling and Method Race Wheels storefronts.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/fox-factory-holding/refs/heads/main/apis.yml)
+**Areas:** Suspension · Cycling · Power-Sports · Manufacturing · E-Commerce · MCP · Agentic Commerce
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## Fox Factory Holding on APIs.io
 
-## Tags:
+Everything profiled for Fox Factory Holding is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/fox-factory-holding/](https://apis.io/providers/fox-factory-holding/)** — or go straight to one of the APIs or properties below.
 
- - Suspension, Cycling, Powersports
+### APIs (1)
 
-## Timestamps
+- [FOX Commerce API (UCP over MCP)](https://apis.io/apis/fox-factory-holding/fox-factory-holding-api/) — The FOX storefront's Universal Commerce Protocol service, transported over the Model Context Protocol at https://ridefox.com/api/ucp/mcp. Anonymous…
 
-- **Created:** 2026-04-19
-- **Modified:** 2026-04-19
+### Published properties
 
-## Maintainers
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-**FN:** Kin Lane
+#### MCP servers (1)
 
-**Email:** kin@apievangelist.com
+Model Context Protocol servers that expose the API to agents.
+
+- [FOX Commerce MCP (UCP)](https://apis.io/servers/fox-factory-holding/fox-commerce-mcp-ucp/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Fox Factory Holding Authentication](https://apis.io/security/fox-factory-holding/fox-factory-holding-authentication/)
+- [Fox Factory Holding Domain Security](https://apis.io/security/fox-factory-holding/fox-factory-holding-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Fox Factory Holding Scopes](https://apis.io/scopes/fox-factory-holding/fox-factory-holding-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Fox Factory Holding Plans Pricing](https://apis.io/plans/fox-factory-holding/fox-factory-holding-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Fox Factory Holding Rate Limits](https://apis.io/rate-limits/fox-factory-holding/fox-factory-holding-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Fox Factory Holding Finops](https://apis.io/finops/fox-factory-holding/fox-factory-holding-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://ridefox.com)
+- [Documentation](https://ridefox.com/agents.md)
+- [Support](https://ridefox.com/pages/contact)
+- [Blog](https://ridefox.com/blogs/news)
+- [Terms of service](https://ridefox.com/policies/terms-of-service)
+- [Privacy policy](https://ridefox.com/policies/privacy-policy)
+- [GitHub](https://github.com/ridefox)
+
+## API Evangelist rating
+
+**Kin Score 26.2** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 23.7 |
+| Developer ergonomics | 30.4 |
+| Access clarity | 21.1 |
+
+**Agent readiness 24.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | derived (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.4** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/fox-factory-holding/](https://apis.io/providers/fox-factory-holding/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Fox Factory Holding: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/fox-factory-holding/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
